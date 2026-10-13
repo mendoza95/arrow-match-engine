@@ -1,21 +1,23 @@
 # arrow-match-engine
 
+```text
 matching-engine/
 ├── .gitignore
 ├── README.md
 ├── CMakeLists.txt
 ├── include/
 │   └── matching/
-│       ├── engine.hpp          # Matching engine and structure declaration
-│       └── timer.hpp           # Performance measurament
+│       ├── engine.hpp          # Declaración del motor de matching y estructuras
+│       └── timer.hpp           # Medidor de rendimiento
 ├── src/
-│   ├── engine.cpp              # Vectorial computation and multithread logic
-│   └── bindings.cpp            # Pybind11 module to expose memory to Python
+│   ├── engine.cpp              # Lógica multihilo y cálculos vectoriales
+│   └── bindings.cpp            # Módulo de Pybind11 para exponer la memoria a Python
 ├── tests/
 │   ├── CMakeLists.txt
-│   └── test_matching.cpp       # Unit tests in C++ (Catch2 o GoogleTest)
+│   └── test_matching.cpp       # Pruebas unitarias en C++ (Catch2 o GoogleTest)
 ├── python/
-│   ├── benchmark.py            # Script for measuring speed and zero-copy
-│   └── requirements.txt        # Dependencies (pyarrow, numpy, pybind11)
+│   ├── benchmark.py            # Script para medir velocidad y zero-copy
+│   └── requirements.txt        # Dependencias (pyarrow, numpy, pybind11)
 └── cmake/
     └── PreventInSourceBuilds.cmake
+```
