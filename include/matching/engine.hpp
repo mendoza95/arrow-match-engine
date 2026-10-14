@@ -5,25 +5,24 @@
 
 namespace matching {
 
-// Estructura de salida para el resultado de un vector de consulta
+// Output Struct for a given query vector
 struct MatchResult {
-    std::size_t query_idx{0};      // Índice del vector consultado
-    std::size_t best_match_idx{0}; // Índice del objetivo con mayor similitud
-    float max_score{-1.0f};        // Puntaje de similitud (e.g. Cosine Similarity)
+    std::size_t query_idx{0};      // Query vector index
+    std::size_t best_match_idx{0}; // Target vector index with best cosine similarity
+    float max_score{-1.0f};        // Cosine similarity score
 };
 
 class VectorMatchingEngine {
 public:
     VectorMatchingEngine() = default;
-
-    // Calcula la similitud de coseno entre dos vectores continuos en memoria
+    //It computes the cosine similarity between two continuous vectors in memory
     [[nodiscard]] static float cosine_similarity(
         const float* vec_a, 
         const float* vec_b, 
         std::size_t dim
     ) noexcept;
 
-    // Ejecuta el matching en paralelo dividiendo las consultas entre N hilos
+    //It executes the matching in parallel spliting the queries among N threads
     [[nodiscard]] static std::vector<MatchResult> match_batch_parallel(
         const float* queries_ptr,
         std::size_t num_queries,
