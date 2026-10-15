@@ -1,3 +1,8 @@
 README_files/
 README.html
+.venv/
 build/
+.vscode/
+__pycache__/
+*.so
+*.dylib
