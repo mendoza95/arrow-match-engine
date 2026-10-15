@@ -25,6 +25,9 @@ add_library(matching_core STATIC
     src/engine.cpp
 )
 
+# Activar -fPIC para permitir enlazar esta librería estática con módulos .so de Python
+set_property(TARGET matching_core PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 target_include_directories(matching_core PUBLIC include)
 
 # 5. Descargar e integrar Pybind11 automáticamente
