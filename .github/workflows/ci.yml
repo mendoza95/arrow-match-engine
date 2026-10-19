@@ -1,4 +1,4 @@
-name: C++ CI Pipeline
+name: C++ Quality & Safety CI
 
 on:
   push:
@@ -7,7 +7,9 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-and-test:
+  # Job 1: Build and test with AddressSanitizer (ASan) for Memory Leaks & Safety
+  asan-memory-check:
+    name: Memory Safety & Leak Check (ASan)
     runs-on: ubuntu-latest
 
     steps:
@@ -25,14 +27,46 @@ jobs:
         sudo apt-get install -y build-essential cmake ninja-build
         pip install pybind11 numpy pyarrow
 
-    - name: Configure CMake
+    - name: Configure CMake with ASan
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release
+        cmake -B build_asan -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
 
-    - name: Build C++ Engine & Tests
+    - name: Build Engine & Tests
       run: |
-        cmake --build build --config Release
+        cmake --build build_asan
 
-    - name: Run C++ Unit Tests (Catch2)
+    - name: Run Catch2 Tests with ASan
       run: |
-        cd build && ctest --output-on-failure
+        cd build_asan && ctest --output-on-failure
+
+  # Job 2: Build and test with ThreadSanitizer (TSan) for Concurrency & Data Races
+  tsan-concurrency-check:
+    name: Concurrency & Data Race Check (TSan)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake ninja-build
+        pip install pybind11 numpy pyarrow
+
+    - name: Configure CMake with TSan
+      run: |
+        cmake -B build_tsan -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=thread"
+
+    - name: Build Engine & Tests
+      run: |
+        cmake --build build_tsan
+
+    - name: Run Catch2 Tests with TSan
+      run: |
+        cd build_tsan && ctest --output-on-failure
