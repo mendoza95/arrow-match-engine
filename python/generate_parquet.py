@@ -3,7 +3,7 @@ import pyarrow.parquet as pq
 import numpy as np
 import os
 
-def create_sample_parquet(filename="dataset.parquet", num_records=10_000, dim=128):
+def create_sample_parquet(filename="python/dataset.parquet", num_records=50_000, dim=128):
     print(f"📦 Generando dataset Parquet con {num_records} registros (dim={dim})...")
     
     # Generar vectores aleatorios continuos en memoria

@@ -12,7 +12,7 @@ except ImportError as e:
     sys.exit(1)
 
 PARQUET_FILE = "python/dataset.parquet"
-NUM_QUERIES = 500
+NUM_QUERIES = 5_000
 DIM = 128
 NUM_THREADS = 8
 

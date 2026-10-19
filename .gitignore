@@ -7,3 +7,4 @@ __pycache__/
 *.so
 *.dylib
 python/dataset.parquet
+.DS_Store
